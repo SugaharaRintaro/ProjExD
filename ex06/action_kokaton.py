@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 from random import randint, choice
 
+
 # すごいね！
 
 class Screen:
@@ -155,7 +156,7 @@ class Books:
             if tori.rct.colliderect(book.rct):
                 hearts.damage(scr)
                 if len(hearts) <= 0:
-                    game_over(scr.sfc, clock,score)  # ゲームオーバー関数，以下初期化
+                    game_over(scr.sfc, clock, score)  # ゲームオーバー関数，以下初期化
                     start_scr(scr)
                     self.books = []
                     score.start_time = pg.time.get_ticks()
@@ -168,40 +169,33 @@ class Books:
             self.books.pop(0)
             num_of_books += 1
 
-class Txt: #金子(C0B21047)作
-    """
-    テキスト表示用クラス
-    """
-    def __init__(self,font,color,xy,text):
-        """
-        font：フォント\n
-        color：文字の色\n
-        xy：文字の中心座標\n
-        text：テキストの内容
-        """
+
+# テキスト表示用クラス
+class Txt:  # 金子(C0B21047)作
+
+    def __init__(self, font, color, xy, text):
         self.text = font.render(text, True, color)
         self.rct = self.text.get_rect()
         self.rct.center = xy
 
-    def blit(self,scr:Screen):
+    def blit(self, scr: Screen):
         scr.blit(self.text, self.rct)
 
 
-def start_scr(scr): #金子作
-    """
-    最初の画面
-    """
-    start_title = Txt(pg.font.Font(None,160), "RED", (800, 300), "Action Kokaton")
-    start_txt = Txt(pg.font.Font(None,100), "BLACK", (800, 500), "Push any key to start")
+#    最初の画面
+
+def start_scr(scr):  # 金子作
+    start_title = Txt(pg.font.Font(None, 160), "RED", (800, 300), "Action Kokaton")
+    start_txt = Txt(pg.font.Font(None, 100), "BLACK", (800, 500), "Push any key to start")
     clock = pg.time.Clock()
     while True:
         for event in pg.event.get():
-            if event.type== pg.QUIT:
+            if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
             if event.type == pg.KEYDOWN:
                 return
-                
+
         scr.bg_update()
         start_txt.blit(scr)
         start_title.blit(scr)
@@ -210,9 +204,9 @@ def start_scr(scr): #金子作
 
 
 # ゲームオーバー処理
-def game_over(sfc, clock,score):
+def game_over(sfc, clock, score):
     # ゲームオーバー画面への遷移
-    atxt = Txt(pg.font.Font(None, 160), (0, 0, 0), (800, 300), "GAME OVER" )
+    atxt = Txt(pg.font.Font(None, 160), (0, 0, 0), (800, 300), "GAME OVER")
     btxt = Txt(pg.font.Font(None, 50), (0, 0, 0), (800, 650), "press 'R' to restart")
     score_txt = Txt(pg.font.Font(None, 80), (0, 0, 0), (800, 500), f"score:{score.score}")
     while True:
@@ -238,7 +232,7 @@ def main():
     books = Books()
     score = Score()
     hearts = Hearts()
-    
+
     start_scr(scr)
     clock = pg.time.Clock()
 
